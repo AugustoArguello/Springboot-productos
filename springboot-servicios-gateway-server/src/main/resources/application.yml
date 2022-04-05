@@ -1,0 +1,32 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: servicio-productos
+        uri: lb://servicio-productos
+        predicates:
+          - Path=/api/productos/**
+        filters:
+          - StripPrefix=2
+          - EjemploCookie=Hola mi mensaje personalizado, usuario, AugustoArguello
+      - id: servicio-item
+        uri: lb://servicio-item
+        predicates:
+          - Path=/api/items/**
+        filters:
+          - StripPrefix=2
+          #- AddRequestHeader=token-request, 123456
+          #- AddResponseHeader=token-response,123456
+          #- AddRequestParameter=nombre, Augusto     
+      - id: servicio-usuarios
+        uri: lb://servicio-usuarios
+        predicates:
+          - Path=/api/users/**
+        filters:
+          - StripPrefix=2    
+      - id: servicio-oauth
+        uri: lb://servicio-oauth
+        predicates:
+          - Path=/api/security/**
+        filters:
+          - StripPrefix=2  
